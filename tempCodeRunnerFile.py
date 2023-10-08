@@ -3,28 +3,15 @@ from ttkbootstrap.constants import *
 import ttkbootstrap as tb
 
 root = tb.Window(themename='vapor')
-default_width = 1080
-default_height = 800
-
-# Set the default size
-root.geometry(f"{default_width}x{default_height}")
-
-# Set the minimum size to the default size
-root.minsize(default_width, default_height)
-
-# Set the maximum size to the default size
-root.maxsize(default_width, default_height)
+root.geometry("1080x800")
 
 # Create the upper frame with a specified size
 upper_frame = tb.Labelframe(root, bootstyle="light", text="File Organizer", borderwidth=5, relief="raised")
 upper_frame.pack(pady=20, padx=10, fill="x")
 
-# Add menu button
-my_menu = tb.Menubutton(upper_frame, bootstyle="info-outline", text="Select Theme")
-my_menu.pack(pady=10, padx=10, side=LEFT)
-
-# Configuring Inside menu
-inside_menu = tb.Menu(my_menu)  
+#Add menu button
+my_menu = tb.Menubutton(upper_frame, bootstyle="info-outline", text="Discover F_W.")
+my_menu.pack(pady=10,padx=10, side=LEFT)
 
 # Add content (a label) inside the frame
 my_title = tb.Label(upper_frame, text="File_Whiz Application", font=("Pacifico", 25, "bold", "italic"), bootstyle="info")
