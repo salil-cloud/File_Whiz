@@ -2,11 +2,7 @@ import os
 import shutil
 
 # Function to organize files in a directory
-
-
-def organize_files(source_folder):
-    # Create folders for different file types
-    file_types = {
+file_types = {
         'Images': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ai', '.psd', '.svg', '.webp', '.ico', '.ps'],
         'Documents': ['.pdf', '.doc', '.docx', '.txt', '.ppt', '.xlsx', '.key', '.odp', '.pps', '.pptx', '.ods', '.xls', 'xlsm', '.odt', '.rtf', '.tex', '.wpd'],
         'Videos': ['.mp4', '.avi', '.mkv', '.mov', '.3g2', '.3gp', '.flv', '.h264', '.m4v', '.mpg', '.mpeg', '.rm', '.swf', '.vob', '.webm', '.wmv'],
@@ -21,6 +17,9 @@ def organize_files(source_folder):
         'Others': [],  # For unrecognized file types
     }
 
+
+def organize_files(source_folder):
+    
     # Iterate through files in the source folder
     for filename in os.listdir(source_folder):
         file_path = os.path.join(source_folder, filename)
@@ -51,3 +50,17 @@ if __name__ == "__main__":
         "Enter the path to the directory you want to organize: ")
     organize_files(source_directory)
     print("Files organized successfully!")
+
+# Function to count the number of files in each category
+def count_file_types(source_folder):
+    counts = {}
+
+    for folder_name, extensions in file_types.items():
+        count = 0
+        for filename in os.listdir(source_folder):
+            file_extension = os.path.splitext(filename)[1].lower()
+            if file_extension in extensions:
+                count += 1
+        counts[folder_name] = count
+
+    return counts
