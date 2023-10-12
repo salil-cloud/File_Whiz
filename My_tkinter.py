@@ -62,6 +62,8 @@ def create_and_open_tab(section_name):
             close_button.pack()
 
         if section_name == "Home":
+            # Function to save the directory path
+            user_directory = ""
             # Function to save user directory
             def save_directory():
                 user_directory = directory_entry.get()
@@ -76,14 +78,6 @@ def create_and_open_tab(section_name):
             directory_label = tb.Label(input_frame, text="__Enter File Path__:", font=('Arial', 12, 'bold', 'underline'), bootstyle="inverse-primary", relief="groove")
             directory_label.pack(side=LEFT, padx=10, pady=5)
             
-            # Function to save the directory path
-            user_directory = ""
-
-            def save_directory():
-                global user_directory
-                user_directory = directory_entry.get()
-                # You can now use the 'user_directory' variable for further processing
-
             # Create an Entry widget to input the directory path
             directory_entry = tb.Entry(input_frame, font=('Arial', 12), bootstyle="light")
             directory_entry.pack(side=LEFT, fill=X, expand=True, padx=10, pady=10)

@@ -45,7 +45,7 @@ def organize_files(source_folder):
                 shutil.move(file_path, os.path.join(target_folder, filename))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":   # remove it and do this task through Tkinter application
     source_directory = input(
         "Enter the path to the directory you want to organize: ")
     organize_files(source_directory)
