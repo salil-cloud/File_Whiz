@@ -1,6 +1,8 @@
 from tkinter import *
 from ttkbootstrap.constants import *
 import ttkbootstrap as tb
+from ttkbootstrap.dialogs import Messagebox
+import os
 from file_operations import count_file_types
 
 root = tb.Window(themename='vapor')
@@ -69,15 +71,18 @@ def create_and_open_tab(section_name):
                 global user_directory
                 user_directory = str(directory_entry.get())
 
-                # Call the count_file_types function to get category counts
-                counts = count_file_types(user_directory)
+                if not os.path.exists(user_directory):
+                    # The specified directory does not exist
+                    error_message = "The specified directory does not exist."
+                    Messagebox.show_warning(error_message, title="Directory Error")
+                else:
+                    # Call the count_file_types function to get category counts
+                    counts = count_file_types(user_directory)
 
                 # Update the category labels in frame1
                 for category, count_label in zip(category_labels.keys(), category_labels.values()):
                     count = counts.get(category, 0)  # Get the count for the category
                     count_label.config(text=f"*     {category}     - {count} Files ")
-
-                # You can now use the 'user_directory' variable and the updated labels for further processing
 
                 return user_directory
 
