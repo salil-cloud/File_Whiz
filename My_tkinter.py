@@ -1,10 +1,11 @@
 from tkinter import *
 from ttkbootstrap.constants import *
 import ttkbootstrap as tb
+from file_operations import count_file_types
 
 root = tb.Window(themename='vapor')
-default_width = 980
-default_height = 700
+default_width = 1080
+default_height = 880
 
 # Set the default size
 root.geometry(f"{default_width}x{default_height}")
@@ -27,7 +28,7 @@ my_menu.pack(pady=10, padx=10, side=LEFT)
 inside_menu = tb.Menu(my_menu)  
 
 # Add content (a label) inside the frame
-my_title = tb.Label(upper_frame, text="File_Whiz Application", font=("Pacifico", 35, "bold", "italic"), bootstyle="info")
+my_title = tb.Label(upper_frame, text="File_Whiz Application", font=("Pacifico", 22, "bold", "italic"), bootstyle="info")
 my_title.pack(pady=5, padx=160, side=LEFT)
 
 # Load the image
@@ -64,11 +65,21 @@ def create_and_open_tab(section_name):
         if section_name == "Home":
             # Function to save the directory path
             user_directory = ""
-            # Function to save user directory
             def save_directory():
-                user_directory = directory_entry.get()
-                return user_directory  ########################################### use this 
-                # You can now use the 'user_directory' variable for further processing
+                global user_directory
+                user_directory = str(directory_entry.get())
+
+                # Call the count_file_types function to get category counts
+                counts = count_file_types(user_directory)
+
+                # Update the category labels in frame1
+                for category, count_label in zip(category_labels.keys(), category_labels.values()):
+                    count = counts.get(category, 0)  # Get the count for the category
+                    count_label.config(text=f"*     {category}     - {count} Files ")
+
+                # You can now use the 'user_directory' variable and the updated labels for further processing
+
+                return user_directory
 
             # Create a frame for the user input
             input_frame = tb.Frame(new_tab, bootstyle="dark", relief=SUNKEN)
@@ -100,6 +111,24 @@ def create_and_open_tab(section_name):
             label1 = tb.Label(frame1, text='______File counts by folder______', font=('Arial', 16, 'bold', 'underline'), bootstyle="inverse-primary", relief=RAISED)
             label1.pack(pady=20, padx=10)
 
+            # Create labels for the categories and display the number of files
+            category_labels = {
+                "Images": None, 
+                "Documents": None,  
+                "Videos": None,  
+                "Music": None,  
+                "Archives": None,
+                "Disc&Media": None, 
+                "Others": None,  
+            }
+
+            # Create and pack labels for each category
+            for category, count_label in category_labels.items():
+                label = tb.Label(frame1, text=f"*     {category}     - 0 Files ", font=('Arial', 16, 'italic'), bootstyle="inverse-light", relief=RAISED)
+                label.pack(padx=25, pady=15, anchor="w", fill=X)
+                category_labels[category] = label  # Store the Label objects in the dictionary
+
+
             label2 = tb.Label(frame2, text='____Organize files by folder____', font=('Arial', 16, 'bold', 'underline'), bootstyle='inverse-primary', relief=RAISED)
             label2.pack(pady=20, padx=10)
             
@@ -112,12 +141,18 @@ def open_home_tab():
     
 def open_about_tab():
     create_and_open_tab("About")
+    # Switch to the "About" tab
+    notebook.select(section_tabs["About"])
 
 def open_ref_materials_tab():
     create_and_open_tab("Reference Materials")
+    # Switch to the "About" tab
+    notebook.select(section_tabs["Reference Materials"])
 
 def open_contact_info_tab():
     create_and_open_tab("Contact Info")
+    # Switch to the "About" tab
+    notebook.select(section_tabs["Contact Info"])
 
 # Function to close a specific tab
 def close_current_tab(section_name):
