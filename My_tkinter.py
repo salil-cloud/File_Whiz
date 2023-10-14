@@ -4,6 +4,7 @@ import ttkbootstrap as tb
 from ttkbootstrap.dialogs import Messagebox
 import os
 from file_operations import count_file_types
+from tkinter.filedialog import askdirectory
 
 root = tb.Window(themename='vapor')
 default_width = 1080
@@ -65,6 +66,13 @@ def create_and_open_tab(section_name):
             close_button.pack()
 
         if section_name == "Home":
+            # Function to open a directory selection dialog
+            def browse_directory():
+                selected_directory = askdirectory()
+                if selected_directory:
+                    directory_entry.delete(0, END)  # Clear the entry
+                    directory_entry.insert(0, selected_directory)
+
             # Function to save the directory path
             user_directory = ""
             def save_directory():
@@ -79,10 +87,10 @@ def create_and_open_tab(section_name):
                     # Call the count_file_types function to get category counts
                     counts = count_file_types(user_directory)
 
-                # Update the category labels in frame1
-                for category, count_label in zip(category_labels.keys(), category_labels.values()):
-                    count = counts.get(category, 0)  # Get the count for the category
-                    count_label.config(text=f"*     {category}     - {count} Files ")
+                    # Update the category labels in frame1
+                    for category, count_label in zip(category_labels.keys(), category_labels.values()):
+                        count = counts.get(category, 0)  # Get the count for the category
+                        count_label.config(text=f"*     {category}     - {count} Files ")
 
                 return user_directory
 
@@ -94,6 +102,10 @@ def create_and_open_tab(section_name):
             directory_label = tb.Label(input_frame, text="__Enter File Path__:", font=('Arial', 12, 'bold', 'underline'), bootstyle="inverse-primary", relief="groove")
             directory_label.pack(side=LEFT, padx=10, pady=5)
             
+            # Browse button to select a directory
+            browse_button = tb.Button(input_frame, text="Browse", command=browse_directory, bootstyle="info-outline")
+            browse_button.pack(side=LEFT, padx=20, pady=5)
+
             # Create an Entry widget to input the directory path
             directory_entry = tb.Entry(input_frame, font=('Arial', 12), bootstyle="light")
             directory_entry.pack(side=LEFT, fill=X, expand=True, padx=10, pady=10)
