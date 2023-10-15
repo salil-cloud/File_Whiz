@@ -31,16 +31,16 @@ my_menu.pack(pady=10, padx=10, side=LEFT)
 inside_menu = tb.Menu(my_menu)  
 
 # Add content (a label) inside the frame
-my_title = tb.Label(upper_frame, text="File_Whiz Application", font=("Pacifico", 22, "bold", "italic"), bootstyle="info")
-my_title.pack(pady=5, padx=160, side=LEFT)
+my_title = tb.Label(upper_frame, text="File_Whiz Application...", font=("Pacifico", 22, "bold", "italic"),anchor="center", justify="center", bootstyle="info")
+my_title.pack(pady=5, padx=26, side=LEFT)
 
 # Load the image
 image = PhotoImage(file='File_Whiz/Images/images1.png')
 
 # Create a Label to display the image
-image_label = Label(upper_frame, image=image)
+image_label = Label(upper_frame, image=image, anchor="center", justify="center")
 image_label.image = image  # Keep a reference to the image to prevent it from being garbage collected
-image_label.pack(padx=5, side=RIGHT)
+image_label.pack(padx=5, side=LEFT)
 
 root.iconbitmap('File_Whiz/Images/Icon.ico')
 root.title("FileWhiz Application")
@@ -125,8 +125,8 @@ def create_and_open_tab(section_name):
 
 
             # Add content to the frames (you can customize this)
-            label1 = tb.Label(frame1, text='______File counts by folder______', font=('Arial', 16, 'bold', 'underline'), bootstyle="inverse-primary", relief=RAISED)
-            label1.pack(pady=20, padx=10)
+            label1 = tb.Label(frame1, text='File counts by folder', font=("Pacifico", 16, 'bold'),anchor="center", justify="center", bootstyle="inverse-info", relief=RAISED)
+            label1.pack(pady=10, padx=10, fill=X)
 
             # Create labels for the categories and display the number of files
             category_labels = {
@@ -141,13 +141,13 @@ def create_and_open_tab(section_name):
 
             # Create and pack labels for each category
             for category, count_label in category_labels.items():
-                label = tb.Label(frame1, text=f"*   0 : Files       | Type : {category} ", font=('Arial', 16, 'bold'), bootstyle="inverse-light", relief=RAISED)
+                label = tb.Label(frame1, text=f"*   0 : Files       | Type : {category} ", font=("Pacifico", 16, 'bold'), bootstyle="inverse-light", relief=RAISED)
                 label.pack(padx=15, pady=15, anchor="w", fill=X)
                 category_labels[category] = label  # Store the Label objects in the dictionary
 
 
-            label2 = tb.Label(frame2, text='____Organize files by folder____', font=('Arial', 16, 'bold', 'underline'), bootstyle='inverse-primary', relief=RAISED)
-            label2.pack(pady=20, padx=10)
+            label2 = tb.Label(frame2, text='       Organize files by folder       ', font=('Pacifico', 16, 'bold'), anchor="center", justify="center", bootstyle='inverse-info', relief=RAISED)
+            label2.pack(pady=10, padx=10, fill=X)
 
             def creating_button() :
                 button_label.config(text="Congratulations!! Your files are organized...")
@@ -163,7 +163,7 @@ def create_and_open_tab(section_name):
             button_style = 'my_custom.TButton'  # Define a custom style name
 
             # Configure the style to set the background color
-            root.style.configure(button_style, background="#ffbf00", activebackground="#54B4D3", borderwidth=5, padding=(0, 0))
+            root.style.configure(button_style, background="#44d7e8", activebackground="#54B4D3", borderwidth=0, padding=(5, 5), relief=SUNKEN)
 
             # Create the button with the custom style
             img_button = tb.Button(frame2, image=org_button, command=creating_button, style=button_style)
@@ -176,9 +176,11 @@ def create_and_open_tab(section_name):
 
             
 # Function to open tabs when menu items are clicked
-def open_home_tab():
-    create_and_open_tab("Home")
-    
+if __name__ == "__main__":
+    def open_home_tab():
+        create_and_open_tab("Home")
+        root.mainloop()
+
 def open_about_tab():
     create_and_open_tab("About")
     # Switch to the "About" tab
