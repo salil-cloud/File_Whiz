@@ -20,7 +20,7 @@ root.minsize(default_width, default_height)
 root.maxsize(default_width, default_height)
 
 # Create the upper frame with a specified size
-upper_frame = tb.Labelframe(root, bootstyle="light", text="File Organizer", borderwidth=5, relief="raised")
+upper_frame = tb.Labelframe(root, bootstyle="light", text="File_Whiz: Classify, Simplify, and Amplify Your File Management!", borderwidth=5, relief="raised")
 upper_frame.pack(pady=20, padx=10, fill="x")
 
 # Add menu button
@@ -90,16 +90,16 @@ def create_and_open_tab(section_name):
                     # Update the category labels in frame1
                     for category, count_label in zip(category_labels.keys(), category_labels.values()):
                         count = counts.get(category, 0)  # Get the count for the category
-                        count_label.config(text=f"*     {category}     - {count} Files ")
+                        count_label.config(text=f"*   {count} Files Found | Type: {category} ")
 
                 return user_directory
 
             # Create a frame for the user input
-            input_frame = tb.Frame(new_tab, bootstyle="dark", relief=SUNKEN)
+            input_frame = tb.Labelframe(new_tab,text='Step 1', bootstyle="info", borderwidth=5, relief="raised")
             input_frame.pack(side=TOP, fill=X, padx=40, pady=10)
 
             # Label and entry for directory input
-            directory_label = tb.Label(input_frame, text="__Enter File Path__:", font=('Arial', 12, 'bold', 'underline'), bootstyle="inverse-primary", relief="groove")
+            directory_label = tb.Label(input_frame, text="__Enter File Path__:", font=('Montserrat', 12, 'bold', 'underline'), bootstyle="inverse-primary", relief="groove")
             directory_label.pack(side=LEFT, padx=10, pady=5)
             
             # Browse button to select a directory
@@ -141,17 +141,40 @@ def create_and_open_tab(section_name):
 
             # Create and pack labels for each category
             for category, count_label in category_labels.items():
-                label = tb.Label(frame1, text=f"*     {category}     - 0 Files ", font=('Arial', 16, 'italic'), bootstyle="inverse-light", relief=RAISED)
-                label.pack(padx=25, pady=15, anchor="w", fill=X)
+                label = tb.Label(frame1, text=f"*   0 : Files       | Type : {category} ", font=('Arial', 16, 'bold'), bootstyle="inverse-light", relief=RAISED)
+                label.pack(padx=15, pady=15, anchor="w", fill=X)
                 category_labels[category] = label  # Store the Label objects in the dictionary
 
 
             label2 = tb.Label(frame2, text='____Organize files by folder____', font=('Arial', 16, 'bold', 'underline'), bootstyle='inverse-primary', relief=RAISED)
             label2.pack(pady=20, padx=10)
+
+            def creating_button() :
+                button_label.config(text="Congratulations!! Your files are organized...")
+            # Load the image for the button
+            org_button = PhotoImage(file='File_Whiz/Images/Resized_loginbutton.png')
+
+            # Create a label widget and set the image
+            img_label = tb.Label(frame2, image=org_button, style='inverse-light')
+            img_label.image = org_button  # Keep a reference to the image
+            # img_label.pack(pady=20)
+
+            # Create a custom style for the button
+            button_style = 'my_custom.TButton'  # Define a custom style name
+
+            # Configure the style to set the background color
+            root.style.configure(button_style, background="#ffbf00", activebackground="#54B4D3", borderwidth=5, padding=(0, 0))
+
+            # Create the button with the custom style
+            img_button = tb.Button(frame2, image=org_button, command=creating_button, style=button_style)
+            img_button.pack(pady=10)
+
+            #creating label to show text after pressing the button
+            button_label = tb.Label(frame2, text='', bootstyle='inverse-light')
+            button_label.pack(pady=10)
+
+
             
-
-
-
 # Function to open tabs when menu items are clicked
 def open_home_tab():
     create_and_open_tab("Home")

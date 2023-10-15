@@ -14,6 +14,20 @@ def count_file_types(user_directory):
                     count += 1
             counts[folder_name] = count
 
+        # Count "Others" by checking for unrecognized file extensions
+        others_count = 0
+        for filename in os.listdir(user_directory):
+            file_extension = os.path.splitext(filename)[1].lower()
+            found = False
+            for extensions in file_types_dict.values():
+                if file_extension in extensions:
+                    found = True
+                    break
+            if not found:
+                others_count += 1
+
+        counts["Others"] = others_count
+
         return counts
     except Exception as e:
         # Handle the exception here
