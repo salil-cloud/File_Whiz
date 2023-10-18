@@ -1,8 +1,12 @@
 from tkinter import *
 from ttkbootstrap.constants import *
+from ttkbootstrap import Floodgauge
 import ttkbootstrap as tb
 from ttkbootstrap.dialogs import Messagebox
 import os
+from PIL import Image, ImageTk, ImageSequence
+from pathlib import Path
+from itertools import cycle
 from file_operations import count_file_types
 from Back_end import organize_files
 from tkinter.filedialog import askdirectory
@@ -147,17 +151,43 @@ def create_and_open_tab(section_name):
                 category_labels[category] = label  # Store the Label objects in the dictionary
 
 
-            label2 = tb.Label(frame2, text='       Organize files by folder       ', font=('Pacifico', 16, 'bold'), anchor="center", justify="center", bootstyle='inverse-info', relief=RAISED)
+            label2 = tb.Label(frame2, text='     Step - 2 : Click to organize     ', font=('Pacifico', 16, 'bold'), anchor="center", justify="center", bootstyle='inverse-info', relief=RAISED)
             label2.pack(pady=10, padx=10, fill=X)
 
             def creating_button() :
                 user_directory = str(directory_entry.get())  # Get the user's selected directory
                 if user_directory:
+                    # Start the Floodgauge
+                    gauge.start()
+                    # Organize Files 
                     organize_files(user_directory)
-                    button_label.config(text="Congratulations!! Your files are organized...")
-                else:
-                    button_label.config(text="Please select a directory first.")
+                    # Stop the Floodgauge
+                    gauge.stop()
+                    # Adjust the path to your animated GIF file
+                    congratulations_gif_path = Path("File_Whiz/Images/Congratulations_gify.gif")
+                    congratulations_label = None  # Initialize the label
+                    with Image.open(congratulations_gif_path) as im:
+                    # Create a sequence
+                        sequence = ImageSequence.Iterator(im)
+                        images = [ImageTk.PhotoImage(s) for s in sequence]
+                        congratulations_image_cycle = cycle(images)
 
+                        # Duration of each frame
+                        framerate = im.info["duration"]
+
+                    # Create a label to display the GIF
+                    congratulations_label = tb.Label(frame2, image=next(congratulations_image_cycle), borderwidth=5)
+                    congratulations_label.pack(fill="both", expand="yes")
+        
+                    def next_frame():
+                        """Update the image for each frame"""
+                        congratulations_label.configure(image=next(congratulations_image_cycle))
+                        congratulations_label.after(framerate, next_frame)
+        
+                    congratulations_label.after(framerate, next_frame)
+                else:
+                    error_message = "Please select a directory first."
+                    Messagebox.show_warning(error_message, title="Directory Missing")
             # Load the image for the button
             org_button = PhotoImage(file='File_Whiz/Images/Resized_loginbutton.png')
 
@@ -174,11 +204,33 @@ def create_and_open_tab(section_name):
 
             # Create the button with the custom style
             img_button = tb.Button(frame2, image=org_button, command=creating_button, style=button_style)
-            img_button.pack(pady=10)
+            img_button.pack(pady=5)
 
-            #creating label to show text after pressing the button
-            button_label = tb.Label(frame2, text='', bootstyle='inverse-light')
-            button_label.pack(pady=10)
+            # Create a Floodgauge widget
+            gauge = Floodgauge(frame2, bootstyle=PRIMARY, font=(None, 14, 'bold'), mask='Memory Used {}%', maximum=100)
+            gauge.pack(fill=X, expand=YES, padx=10, pady=(0, 5))
+
+            # Adjust the path to your animated GIF file
+            congratulations_gif_path = Path("File_Whiz/Images/Welcome_user.gif")
+            with Image.open(congratulations_gif_path) as im:
+                # Create a sequence
+                sequence = ImageSequence.Iterator(im)
+                images = [ImageTk.PhotoImage(s) for s in sequence]
+                congratulations_image_cycle = cycle(images)
+
+                # Duration of each frame
+                framerate = im.info["duration"]
+
+            # Create a label to display the GIF
+            congratulations_label = tb.Label(frame2, image=next(congratulations_image_cycle), borderwidth=5)
+            congratulations_label.pack(fill="both", expand="yes")
+        
+            def next_frame():
+                """Update the image for each frame"""
+                congratulations_label.configure(image=next(congratulations_image_cycle))
+                congratulations_label.after(framerate, next_frame)
+        
+            congratulations_label.after(framerate, next_frame)
 
 
             
