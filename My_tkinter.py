@@ -163,7 +163,7 @@ def create_and_open_tab(section_name):
             button_style = 'my_custom.TButton'  # Define a custom style name
 
             # Configure the style to set the background color
-            root.style.configure(button_style, background="#44d7e8", activebackground="#54B4D3", borderwidth=0, padding=(5, 5), relief=SUNKEN)
+            root.style.configure(button_style, background="#44d7e8", activebackground="#54B4D3", borderwidth=0, padding=(0, 0), relief=SUNKEN)
 
             # Create the button with the custom style
             img_button = tb.Button(frame2, image=org_button, command=creating_button, style=button_style)

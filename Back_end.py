@@ -1,6 +1,5 @@
 import os
 import shutil
-import My_tkinter
 import file_types
 
 
