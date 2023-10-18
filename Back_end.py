@@ -1,11 +1,10 @@
 import os
 import shutil
-import file_types
-
-
+from file_types import get_file_types  # Import the get_file_types function
 
 def organize_files(user_directory):
-    
+    file_types = get_file_types()  # Fetch the file types from the file_types module
+
     # Iterate through files in the source folder
     for filename in os.listdir(user_directory):
         file_path = os.path.join(user_directory, filename)
@@ -29,10 +28,3 @@ def organize_files(user_directory):
                 target_folder = os.path.join(user_directory, 'Others')
                 os.makedirs(target_folder, exist_ok=True)
                 shutil.move(file_path, os.path.join(target_folder, filename))
-
-# This function only for command line testung/usage
-# if __name__ == "__main__":   # remove it and do this task through Tkinter application
-#     source_directory = input(
-#         "Enter the path to the directory you want to organize: ")
-#     organize_files(source_directory)
-#     print("Files organized successfully!")

@@ -4,6 +4,7 @@ import ttkbootstrap as tb
 from ttkbootstrap.dialogs import Messagebox
 import os
 from file_operations import count_file_types
+from Back_end import organize_files
 from tkinter.filedialog import askdirectory
 
 root = tb.Window(themename='vapor')
@@ -150,7 +151,13 @@ def create_and_open_tab(section_name):
             label2.pack(pady=10, padx=10, fill=X)
 
             def creating_button() :
-                button_label.config(text="Congratulations!! Your files are organized...")
+                user_directory = str(directory_entry.get())  # Get the user's selected directory
+                if user_directory:
+                    organize_files(user_directory)
+                    button_label.config(text="Congratulations!! Your files are organized...")
+                else:
+                    button_label.config(text="Please select a directory first.")
+
             # Load the image for the button
             org_button = PhotoImage(file='File_Whiz/Images/Resized_loginbutton.png')
 
