@@ -10,7 +10,6 @@ from itertools import cycle
 from file_operations import count_file_types
 from Back_end import organize_files
 from About_gui import get_about_text
-from How_to import get_about_Howto
 from tkinter.filedialog import askdirectory
 
 root = tb.Window(themename='vapor')
@@ -253,9 +252,29 @@ def create_and_open_tab(section_name):
             About_tab.pack(pady=5, padx=26, side=TOP)
 
         if section_name == "How to Operate":
-            About_tab = tb.Label(new_tab, text=get_about_Howto(), font=(
-            "Pacifico", 12, "italic"), anchor="center", justify="center", bootstyle="default")
+            About_tab = tb.Label(new_tab, text="Learn How to Operate..", font=(
+            "Pacifico", 12, "bold"), anchor="center", justify="center", bootstyle="default")
             About_tab.pack(pady=5, padx=26, side=TOP)
+
+            image = PhotoImage(file='File_Whiz/Images/How_to.png')
+            # Create a Label to display the image
+            image_label = Label(new_tab, image=image,
+                        anchor="center", justify="center", borderwidth=0)
+            # Keep a reference to the image to prevent it from being garbage collected
+            image_label.image = image
+            image_label.pack(padx=5)
+
+        if section_name == "Contact Info":
+            About_tab = tb.Label(new_tab, text="Dev/Author : Salil Debnath", font=(
+            "Pacifico", 12), anchor="center", justify="center", bootstyle="default")
+            About_tab.pack(pady=5, padx=26, side=TOP)
+            image = PhotoImage(file='File_Whiz/Images/About_linkedin.png')
+            # Create a Label to display the image
+            image_label = Label(new_tab, image=image,
+                        anchor="center", justify="center", borderwidth=0)
+            # Keep a reference to the image to prevent it from being garbage collected
+            image_label.image = image
+            image_label.pack(padx=5)
 
 
 # Function to open tabs when menu items are clicked
