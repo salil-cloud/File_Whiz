@@ -187,7 +187,7 @@ def create_and_open_tab(section_name):
                     organize_files(user_directory)
                     # Stop the Floodgauge
                     gauge.stop()
-                    Completion_message = "Wonderful job! Your files are now elegantly sorted and all set"
+                    Completion_message = "Wonderful job! Your files are now sorted and all set"
                     Messagebox.show_info(
                         Completion_message, title="Task Completed")
                 else:
