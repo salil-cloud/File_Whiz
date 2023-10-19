@@ -4,6 +4,7 @@ from ttkbootstrap import Floodgauge
 import ttkbootstrap as tb
 from ttkbootstrap.dialogs import Messagebox
 import os
+import webbrowser
 from PIL import Image, ImageTk, ImageSequence
 from pathlib import Path
 from itertools import cycle
@@ -275,6 +276,25 @@ def create_and_open_tab(section_name):
             # Keep a reference to the image to prevent it from being garbage collected
             image_label.image = image
             image_label.pack(padx=5)
+            # function to open my linkedin
+            def open_linkedin() :
+                webbrowser.open_new_tab("https://www.linkedin.com/in/salil-debnath-8530341a2/")
+            # function to open my git hub 
+            def open_github() :
+                webbrowser.open_new_tab("https://github.com/salil-cloud")
+            # function to open my project repo
+            def open_project_repo() :
+                webbrowser.open_new_tab("https://github.com/salil-cloud/File_Whiz")
+            link_button1 = tb.Button(new_tab, text="Click to visit my Linked-in profile", cursor="hand2", command=open_linkedin, bootstyle = 'info')
+            link_button1.pack( pady=2)
+            link_button2 = tb.Button(new_tab, text="Click to visit my Git-hub", cursor="hand2", command=open_github)
+            link_button2.pack( pady=2, padx=10, side=LEFT)
+            link_button3 = tb.Button(new_tab, text="Click to access project repo", cursor="hand2", command=open_project_repo)
+            link_button3.pack( pady=2, padx=10, side=LEFT)
+            About_tab = tb.Label(new_tab, text="We value your feedback and suggestions.\n* Connect with Us on Social Media\n", font=(
+            "Pacifico", 10), anchor="center", justify="center", bootstyle="default")
+            About_tab.pack(pady=5, padx=26, side=LEFT)
+            
 
 
 # Function to open tabs when menu items are clicked
