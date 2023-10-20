@@ -5,6 +5,7 @@ import ttkbootstrap as tb
 from ttkbootstrap.dialogs import Messagebox
 import os
 import webbrowser
+import sys
 from PIL import Image, ImageTk, ImageSequence
 from pathlib import Path
 from itertools import cycle
@@ -12,6 +13,17 @@ from file_operations import count_file_types
 from Back_end import organize_files
 from About_gui import get_about_text
 from tkinter.filedialog import askdirectory
+
+# https://stackoverflow.com/questions/31836104/pyinstaller-and-onefile-how-to-include-an-image-in-the-exe-file
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 root = tb.Window(themename='vapor')
 default_width = 1080
@@ -44,7 +56,7 @@ my_title = tb.Label(upper_frame, text="File_Whiz Application...", font=(
 my_title.pack(pady=5, padx=26, side=LEFT)
 
 # Load the image
-image = PhotoImage(file='File_Whiz/Images/images1.png')
+image = PhotoImage(file=resource_path('Images\images1.png'))
 
 # Create a Label to display the image
 image_label = Label(upper_frame, image=image,
@@ -53,7 +65,7 @@ image_label = Label(upper_frame, image=image,
 image_label.image = image
 image_label.pack(padx=5, side=LEFT)
 
-root.iconbitmap('File_Whiz/Images/Icon.ico')
+root.iconbitmap(resource_path('Images\Icon.ico'))
 root.title("FileWhiz Application")
 
 # Create a Notebook (tabbed interface) for the sections
@@ -173,10 +185,6 @@ def create_and_open_tab(section_name):
                               16, 'bold'), anchor="center", justify="center", bootstyle='inverse-info', relief=RAISED)
             label2.pack(pady=10, padx=10, fill=X)
 
-            # Define the variable with a default value
-            congratulations_gif_path = Path(
-                "File_Whiz/Images/Welcome_user.gif")
-
             def creating_button():
                 # Get the user's selected directory
                 user_directory = str(directory_entry.get())
@@ -196,7 +204,7 @@ def create_and_open_tab(section_name):
                         error_message, title="Directory Missing")
             # Load the image for the button
             org_button = PhotoImage(
-                file='File_Whiz/Images/Resized_loginbutton.png')
+                file=resource_path('Images\Resized_loginbutton.png'))
 
             # Create a label widget and set the image
             img_label = tb.Label(frame2, image=org_button,
@@ -224,7 +232,7 @@ def create_and_open_tab(section_name):
 
             # Adjust the path to your animated GIF file
             congratulations_gif_path = Path(
-                "File_Whiz/Images/Welcome_user.gif")
+                resource_path("Images\Welcome_user.gif"))
             with Image.open(congratulations_gif_path) as im:
                 # Create a sequence
                 sequence = ImageSequence.Iterator(im)
@@ -257,7 +265,7 @@ def create_and_open_tab(section_name):
             "Pacifico", 12, "bold"), anchor="center", justify="center", bootstyle="default")
             About_tab.pack(pady=5, padx=26, side=TOP)
 
-            image = PhotoImage(file='File_Whiz/Images/How_to.png')
+            image = PhotoImage(file=resource_path('Images\How_to.png'))
             # Create a Label to display the image
             image_label = Label(new_tab, image=image,
                         anchor="center", justify="center", borderwidth=0)
@@ -269,7 +277,7 @@ def create_and_open_tab(section_name):
             About_tab = tb.Label(new_tab, text="Dev/Author : Salil Debnath", font=(
             "Pacifico", 12), anchor="center", justify="center", bootstyle="default")
             About_tab.pack(pady=5, padx=26, side=TOP)
-            image = PhotoImage(file='File_Whiz/Images/About_linkedin.png')
+            image = PhotoImage(file=resource_path('Images\About_linkedin.png'))
             # Create a Label to display the image
             image_label = Label(new_tab, image=image,
                         anchor="center", justify="center", borderwidth=0)
